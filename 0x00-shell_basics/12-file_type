@@ -1,2 +1,2 @@
 #!/bin/bash
-file /tmp/iamfile | awk '{print $0}'
+file /tmp/iamafile | awk '{print $0}'
