@@ -3,4 +3,10 @@
 # Count occurrences
 # Sort the data
 
-awk '{count[$1" "$9]++} END {for (data in count) print count[data], data}' apache-access.log | sort -nr
+awk '{
+  count[$1" "$9]++
+} END {
+  for (data in count) {
+    print $(((NF-1)*5)+1), count[data], data;
+  }
+}' apache-access.log | sort -nr
