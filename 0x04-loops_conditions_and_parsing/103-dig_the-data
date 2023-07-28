@@ -7,6 +7,6 @@ awk '{
   count[$1" "$9]++
 } END {
   for (data in count) {
-    print $(((NF-1)*5)+1), count[data], data;
+    print $(((NF-1)*5)+6), count[data], data;
   }
 }' apache-access.log | sort -nr
