@@ -3,46 +3,50 @@
 SCRIPT_PATH="./manage_my_process"
 
 start() {
-	echo "manage_my_process started"
-	if [ ! -f /var/run/my_process.pid ]; then
+	if [ -f /var/run/my_process.pid ]; then
+		echo "manage_my_process is already running with PID: $(cat /var/run/my_process.pid)"
+	else
 		"$SCRIPT_PATH" &
-		echo "$!" > /var/run/my_process.pid
-	fi
+			echo "$!" > /var/run/my_process.pid
+			echo "manage_my_process started"
+			fi
 }
 
 stop() {
 	if [ -f /var/run/my_process.pid ]; then
 		pid=$(cat /var/run/my_process.pid)
-		kill "$pid"
-		rm /var/run/my_process.pid
-		echo "manage_my_process stopped"
-	fi
+			kill "$pid"
+			rm /var/run/my_process.pid
+			echo "manage_my_process stopped"
+	else
+		echo "manage_my_process is not running"
+			fi
 }
 
 restart() {
 	if [ -f /var/run/my_process.pid ]; then
 		pid=$(cat /var/run/my_process.pid)
-		kill "$pid"
-		rm /var/run/my_process.pid
-	fi
-	if [ ! -f /var/run/my_process.pid ]; then
-		"$SCRIPT_PATH" &
-		echo "$!" > /var/run/my_process.pid
-		echo "manage_my_process restarted"
-	fi
+			kill "$pid"
+			rm /var/run/my_process.pid
+			fi
+			if [ ! -f /var/run/my_process.pid ]; then
+				"$SCRIPT_PATH" &
+					echo "$!" > /var/run/my_process.pid
+					echo "manage_my_process restarted"
+					fi
 }
 
 case "$1" in
-	start)
-		start
-		;;
-	stop)
-		stop
-		;;
-	restart)
-		restart
-		;;
-	*)
-		echo "Usage: manage_my_process {start|stop|restart}"
-		;;
+start)
+start
+;;
+stop)
+stop
+;;
+restart)
+restart
+;;
+*)
+echo "Usage: manage_my_process {start|stop|restart}"
+;;
 esac
