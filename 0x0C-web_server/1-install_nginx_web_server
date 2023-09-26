@@ -7,8 +7,16 @@
 #	- (requesting a page) using curl, it must return a page
 #	- that contains the string Hello World!
 
-apt-get -y update
-apt-get -y install nginx
-ufw allow 'Nginx HTTP'
+
+# Install Nginx
+sudo apt-get update -y
+sudo apt-get install nginx -y
+
+# Set the listening port to 80
+sudo sed -i 's/listen 80 default_server;/listen 80;/g' /etc/nginx/sites-available/default
+
+# Create a default index.html file
 echo "Hello World!" > /var/www/html/index.html
-service nginx restart
+
+# Restart Nginx
+sudo service nginx restart
