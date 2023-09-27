@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-
 # Update the package list and install Nginx
 # Create a configuration file for the redirection
 
