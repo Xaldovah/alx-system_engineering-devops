@@ -6,8 +6,6 @@ sudo apt upgrade
 
 sudo apt install haproxy
 
-sudo nano /etc/haproxy/haproxy.cfg
-
 global
   log 127.0.0.1 local2
   maxconn 4096
@@ -23,13 +21,13 @@ defaults
   timeout server 10s
 
 frontend http
-  bind *:80
+  bind :80
   default_backend webservers
 
 backend webservers
   balance roundrobin
-  server [265468]-web-01 52.3.254.195:80 check
-  server [265468]-web-02 54.197.42.179:80 check
+  server web01 52.3.254.195:80 check
+  server web02 54.197.42.179:80 check
 
 sudo systemctl enable haproxy
 sudo systemctl start haproxy
