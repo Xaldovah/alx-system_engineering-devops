@@ -1,33 +1,51 @@
 #!/usr/bin/env bash
 # Install and configure HAproxy on your lb-01 server
 
-sudo apt update
-sudo apt upgrade
+sudo apt-get update
 
-sudo apt install haproxy
+sudo apt-get install -y haproxy
 
-global
-  log 127.0.0.1 local2
-  maxconn 4096
+# Configure HAProxy
+echo "ENABLED=1" >> /etc/default/haproxy
+mv /etc/haproxy/haproxy.cfg{,.original}
+touch /etc/haproxy/haproxy.cfg
+
+printf %s "global
+        log 127.0.0.1 local0 notice
+        maxconn 4096
+        user haproxy
+        group haproxy
 
 defaults
-  log global
-  mode http
-  option httplog
-  option dontlognull
-  retries 3
-  timeout connect 5s
-  timeout client 10s
-  timeout server 10s
+        log global
+        mode http
+        option httplog
+        option dontlognull
+        retries 3
+        option redispatch
+        timeout connect 5000
+        timeout client 30000
+        timeout server 3000
+        errorfile 400 /etc/haproxy/errors/400.http
+        errorfile 403 /etc/haproxy/errors/403.http
+        errorfile 408 /etc/haproxy/errors/408.http
+        errorfile 500 /etc/haproxy/errors/500.http
+        errorfile 502 /etc/haproxy/errors/502.http
+        errorfile 503 /etc/haproxy/errors/503.http
+        errorfile 504 /etc/haproxy/errors/504.http
 
-frontend http
-  bind :80
-  default_backend webservers
+frontend http-in
+        timeout client 30000
+        bind 0:80
+        default_backend servers
 
-backend webservers
-  balance roundrobin
-  server web01 52.3.254.195:80 check
-  server web02 54.197.42.179:80 check
+backend servers
+        timeout connect 3000
+        timeout server 30000
+        balance roundrobin
+        server 265468-web-01 52.3.254.195:80 check
+        server 265468-web-02 54.197.42.179:80 check
 
-sudo systemctl enable haproxy
-sudo systemctl start haproxy
+" >> /etc/haproxy/haproxy.cfg
+
+sudo service haproxy restart
