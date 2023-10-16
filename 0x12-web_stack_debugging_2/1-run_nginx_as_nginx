@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+# Stop Apache processes if running
+if pgrep apache2; then
+    service apache2 stop
+fi
+
+# Update the Nginx configuration to listen on port 8080
+sed -i 's/listen 80;/listen 8080;/' /etc/nginx/sites-available/default
+sed -i 's/listen \[::\]:80;/listen \[::\]:8080;/' /etc/nginx/sites-available/default
+
+# Restart Nginx as the nginx user
+service nginx restart
+
+# Verify that Nginx is running as the nginx user
+pgrep aux | grep nginx
+
+# Verify that Nginx is listening on port 8080
+nc -z 0 8080
+
