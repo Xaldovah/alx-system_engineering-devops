@@ -4,5 +4,5 @@
 user="$1"
 
 if [ "$user" ] ; then
-	chsh -s "$(which bash)" "$user" && su "$user" -c "whoami"
+	chsh -s "$(command -v bash)" "$user" && su "$user" -c "whoami"
 fi
