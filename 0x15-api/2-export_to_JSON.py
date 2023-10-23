@@ -1,8 +1,8 @@
 #!/usr/bin/pytho3
 """This module extracts data to json format"""
 from json import dumps
-import requests
 from sys import argv
+import requests
 
 
 if __name__ == '__main__':
