@@ -5,7 +5,7 @@ import requests
 import sys
 
 
-def get_employee_todo_progress(employee_id):
+def get_employee_todo_progress(employee_id: int):
     """
     Retrieve and display an employee's TODO list progress from a REST API.
 
@@ -50,11 +50,15 @@ def get_employee_todo_progress(employee_id):
         for task in fertig:
             print(f"\t{task['title']}")
 
+    except requests.exceptions.ConnectionError as e:
+        print(f"Could not connect to the API: {e}")
     except requests.exceptions.RequestException as e:
         print(f"An error occurred while making the request: {e}")
 
 
 if __name__ == '__main__':
+    """This block will only be executed when the script is run directly."""
+
     if len(sys.argv) != 2:
         print("Usage: python3 gather_data_from_an_API.py <employee_id>")
     else:
