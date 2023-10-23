@@ -1,4 +1,4 @@
-#!/usr/bin/pytho3
+#!/usr/bin/python3
 """This module extracts data to json format"""
 from json import dumps
 from sys import argv
