@@ -1,66 +1,31 @@
 #!/usr/bin/python3
 """This is the get_employee_todo_progress module
 """
+from sys import argv
 import requests
-import sys
-
-
-def get_employee_todo_progress(employee_id: int):
-    """
-    Retrieve and display an employee's TODO list progress from a REST API.
-
-    Args:
-        employee_id (int): The ID of the employee.
-
-    Returns:
-        None
-    """
-
-    base_url = "https://jsonplaceholder.typicode.com"
-    user_url = f"{base_url}/users/{employee_id}"
-    todos_url = f"{base_url}/todos?userId={employee_id}"
-
-    try:
-        """Send a GET request to the user URL to fetch user information"""
-        user_res = requests.get(user_url)
-
-        """Send a GET request to the todos URL to
-        fetch the employee's TODO list"""
-        todos_res = requests.get(todos_url)
-
-        """Parse the JSON data from the responses"""
-        user_data = user_res.json()
-        todos_data = todos_res.json()
-
-        """Check if the user exists"""
-        if user_res.status_code != 200:
-            print(f"User with ID {employee_id} not found.")
-            return
-
-        """Extract user information"""
-        emp_nm = user_data.get("name")
-
-        """Filter completed tasks from the TODO list"""
-        fertig = [task for task in todos_data if task["completed"]]
-        total = len(todos_data)
-
-        """Print the employee's TODO list progress"""
-        print(f"Employee {emp_nm} is done with tasks({len(fertig)}/{total}): ")
-
-        for task in fertig:
-            print(f"\t{task['title']}")
-
-    except requests.exceptions.ConnectionError as e:
-        print(f"Could not connect to the API: {e}")
-    except requests.exceptions.RequestException as e:
-        print(f"An error occurred while making the request: {e}")
 
 
 if __name__ == '__main__':
-    """This block will only be executed when the script is run directly."""
+    try:
+        employee_id = int(argv[1])
+    except ValueError:
+        exit()
 
-    if len(sys.argv) != 2:
-        print("Usage: python3 gather_data_from_an_API.py <employee_id>")
-    else:
-        employee_id = int(sys.argv[1])
-        get_employee_todo_progress(employee_id)
+    api_url = 'https://jsonplaceholder.typicode.com'
+    user_url = '{api}/users/{id}'.format(api=api_url, id=employee_id)
+    todo_url = '{user_url}/todos'.format(user_url=user_url)
+
+    user_res = requests.get(user_url).json()
+    name = user_res.get('name')
+    user_res = requests.get(todo_url).json()
+    total = len(user_res)
+    incomplete = sum([elem['completed'] is False for elem in user_res])
+    completed = total - incomplete
+
+    str = "Employee {emp_name} is done with tasks({completed}/{total}):"
+    print(str.format(
+        emp_name=name, completed=completed, total=total))
+
+    for elem in user_res:
+        if elem.get('completed') is True:
+            print('\t', elem.get('title'))
