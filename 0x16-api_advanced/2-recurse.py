@@ -23,7 +23,7 @@ def recurse(subreddit, hot_list=[], after=None):
     query_str = {'after': after, 'limit': '100'}
 
     response = requests.get(url, headers=headers, params=query_str,
-            allow_redirects=False)
+                            allow_redirects=False)
 
     if response.status_code == 200:
         response = response.json()
