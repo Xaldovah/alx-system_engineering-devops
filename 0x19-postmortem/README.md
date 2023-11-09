@@ -1,10 +1,10 @@
 # Postmortem: The Day the Database Took a Nap
 ## Issue Summary:
-**Duration:** Siesta started on 8th of November at 10:00 AM and concluded fashionably late at 1:30 PM (UTC).
-**Impact:** Our web service decided to channel its inner sloth, leading to a 30% drop in response time. Approximately 15% of users got an unexpected break with slow loading times and sporadic disconnections.
+    • Duration: Siesta started on 8th of November at 10:00 AM and concluded fashionably late at 1:30 PM (UTC).
+    • Impact: Our web service decided to channel its inner sloth, leading to a 30% drop in response time. Approximately 15% of users got an unexpected break with slow loading times and sporadic disconnections.
 ## Timeline:
-**Issue Detection:** The alarm clock rang at 10:00 AM, courtesy of our vigilant monitoring system throwing a fit about skyrocketing response time.
-**Detection Method:** The monitoring system slid into our DMs with alerts, screaming, "Nairobi, we have a problem!"
+    • Issue Detection: The alarm clock rang at 10:00 AM, courtesy of our vigilant monitoring system throwing a fit about skyrocketing response time.
+    • Detection Method: The monitoring system slid into our DMs with alerts, screaming, "Nairobi, we have a problem!"
 ## Actions Taken:
 ### Investigation:
     • The crack detective team (a.k.a. the engineering squad) started digging, suspecting foul play in the web server and database realms.
