@@ -1,27 +1,28 @@
 # Postmortem: The Day the Database Took a Nap
 ## Issue Summary:
-•	Duration: Siesta started on 8th of November at 10:00 AM and concluded fashionably late at 1:30 PM (UTC).
-•	Impact: Our web service decided to channel its inner sloth, leading to a 30% drop in response time. Approximately 15% of users got an unexpected break with slow loading times and sporadic disconnections.
+    •	*Duration:* Siesta started on 8th of November at 10:00 AM and concluded fashionably late at 1:30 PM (UTC).
+    •	*Impact:* Our web service decided to channel its inner sloth, leading to a 30% drop in response time. Approximately 15% of users got an unexpected break with slow loading times and sporadic disconnections.
 ## Timeline:
-•	Issue Detection: The alarm clock rang at 10:00 AM, courtesy of our vigilant monitoring system throwing a fit about skyrocketing response time.
-•	Detection Method: The monitoring system slid into our DMs with alerts, screaming, "Nairobi, we have a problem!"
-•	Actions Taken:
-•	Investigation: The crack detective team (a.k.a. the engineering squad) started digging, suspecting foul play in the web server and database realms.
-•	Assumptions: Initially, the blame game pointed fingers at the database, accusing it of sleeping on the job.
-•	Misleading Paths:
-•	Like a wild goose chase, the team chased down the path of database query optimization issues.
-•	Network latency got some unwarranted attention, playing the innocent bystander with no connection to the crime.
-•	Escalation:
-•	The incident report went up the corporate ladder to the DevOps and Database teams, who promptly put on their Sherlock hats.
-•	Resolution:
-•	Unmasking the villain, we discovered a misconfigured database connection pool, caught napping and causing delays in the query execution.
-•	The database connection pool received a stern talking-to, a fresh cup of coffee, and a makeover.
+    •	*Issue Detection:* The alarm clock rang at 10:00 AM, courtesy of our vigilant monitoring system throwing a fit about skyrocketing response time.
+    •	*Detection Method:* The monitoring system slid into our DMs with alerts, screaming, "Nairobi, we have a problem!"
+## Actions Taken:
+### Investigation:
+    •    The crack detective team (a.k.a. the engineering squad) started digging, suspecting foul play in the web server and database realms.
+    •	*Assumptions:* Initially, the blame game pointed fingers at the database, accusing it of sleeping on the job.
+### Misleading Paths:
+    •	Like a wild goose chase, the team chased down the path of database query optimization issues.
+    •	Network latency got some unwarranted attention, playing the innocent bystander with no connection to the crime.
+### Escalation:
+    •	The incident report went up the corporate ladder to the DevOps and Database teams, who promptly put on their Sherlock hats.
+    •	Resolution:
+    •	Unmasking the villain, we discovered a misconfigured database connection pool, caught napping and causing delays in the query execution.
+    •	The database connection pool received a stern talking-to, a fresh cup of coffee, and a makeover.
 ## Root Cause and Resolution:
-•	Root Cause:
-•	The database connection pool decided to snooze on the job due to a misconfiguration, leading to performance hiccups.
-•	Resolution:
-•	The configuration got a facelift, with a spa day for the connection pool—max connections were adjusted, and its efficiency got a makeover.
-•	Database queries attended therapy sessions and came out optimized and rejuvenated.
+### Root Cause:
+    •	The database connection pool decided to snooze on the job due to a misconfiguration, leading to performance hiccups.
+### Resolution:
+    •	The configuration got a facelift, with a spa day for the connection pool—max connections were adjusted, and its efficiency got a makeover.
+    •	Database queries attended therapy sessions and came out optimized and rejuvenated.
 ## Corrective and Preventative Measures:
 ### Improvements:
     •	Introduced a snazzy new monitoring system with a dash of pizzazz to detect potential database drama.
